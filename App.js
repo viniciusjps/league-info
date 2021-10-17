@@ -5,7 +5,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import HomeScreen from "./screens/HomeScreen";
+import HomeScreen from "./src/screens/HomeScreen";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
