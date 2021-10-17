@@ -20,7 +20,7 @@ const Header = () => {
 export default Header;
 const styles = StyleSheet.create({
   container: {
-    height: 60,
+    height: 80,
     backgroundColor: '#242423',
     alignItems: 'center',
     position: 'relative',
@@ -30,6 +30,6 @@ const styles = StyleSheet.create({
     height: 140,
     width: 140,
     position: 'absolute',
-    top: -10
+    top: 10
   }
 });
