@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import HomeScreen from "./src/screens/HomeScreen";
+import ChampionScreen from "./src/screens/ChampionScreen";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -19,6 +20,14 @@ export default function App() {
             component={HomeScreen}
             options={{
               headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ChampionScreen"
+            component={ChampionScreen}
+            options={{
+              headerShown: true,
+              title: ''
             }}
           />
         </Stack.Navigator>

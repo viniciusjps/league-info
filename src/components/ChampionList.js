@@ -4,12 +4,15 @@ import {
   StyleSheet,
   Image,
   View,
-  ScrollView
+  ScrollView,
+  TouchableOpacity
 } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
 
 
 const ChampionList = () => {
 
+  const navigation = useNavigation();
   const [champions, setChampions] = useState([]);
 
   useEffect(() => {
@@ -32,14 +35,16 @@ const ChampionList = () => {
     <View>
       {
         champions.length > 0
-          ? <View style={styles.container}>
+          ?
+          <View style={styles.container}>
             <Text style={styles.title}>Campeões</Text>
+            <View style={styles.bar} />
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
               {champions.map((item, i) => (
-                <View key={i} style={styles.item}>
+                <TouchableOpacity key={i} style={styles.item} onPress={() => { navigation.navigate('ChampionScreen', { champion: item.name }); }}>
                   <Image style={styles.image} source={{ uri: item.image }} />
                   <Text style={styles.name}>{item.name}</Text>
-                </View>
+                </TouchableOpacity>
               ))}
             </ScrollView>
           </View>
@@ -53,28 +58,35 @@ export default ChampionList;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#ecf0f1',
-    paddingTop: 50,
-    paddingLeft: 15,
+    paddingTop: 40,
     paddingBottom: 20
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
+    paddingLeft: 16,
     fontWeight: '300',
-    marginBottom: 15,
     color: '#be924e',
     textTransform: 'uppercase'
   },
   image: {
     height: 100,
     width: 100,
-    borderRadius: 35,
+    borderRadius: 50,
   },
   item: {
-    marginRight: 15,
-    alignItems: 'center'
+    marginLeft: 16,
+    alignItems: 'center',
   },
   name: {
     marginTop: 3,
     color: '#242423'
+  },
+  bar: {
+    height: 2,
+    width: 50,
+    backgroundColor: '#be924e',
+    marginTop: 8,
+    marginLeft: 16,
+    marginBottom: 16,
   }
 });

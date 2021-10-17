@@ -12,7 +12,7 @@ import logoGame from './../../assets/images/logo_name.png';
 const Header = () => {
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={{ uri: logoGame }} />
+      <Image style={styles.image} source={logoGame} />
     </View>
   );
 };
@@ -20,16 +20,16 @@ const Header = () => {
 export default Header;
 const styles = StyleSheet.create({
   container: {
-    height: 50,
+    height: 60,
     backgroundColor: '#242423',
     alignItems: 'center',
     position: 'relative',
-    zIndex: 5
+    zIndex: 5,
   },
   image: {
     height: 140,
     width: 140,
     position: 'absolute',
-    top: -20
+    top: -10
   }
 });
