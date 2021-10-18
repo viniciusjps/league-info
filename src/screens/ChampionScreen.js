@@ -25,9 +25,7 @@ const ChampionScreen = ({ route }) => {
           setAvatar(`https://ddragon.leagueoflegends.com/cdn/11.20.1/img/champion/${champ}.png`);
           setChampion(res.data[champ]);
           navigation.setOptions({ title: champ });
-        }).catch(err => {
-          useNavigation().goBack();
-        });
+        }).catch(err => { useNavigation().goBack(); });
     }
   }, []);
 
@@ -62,6 +60,21 @@ const ChampionScreen = ({ route }) => {
               <Text style={styles.titleSection}>Splash Arte</Text>
               <View style={styles.barSection} />
               <Image style={styles.splash} source={{ uri: `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.id}_0.jpg` }} />
+            </View>
+            <View style={styles.content}>
+              <Text style={styles.titleSection}>Habilidades</Text>
+              <View style={styles.barSection} />
+              {
+                champion.spells.map((spell, i) => (
+                  <View key={i} style={styles.spell}>
+                    <View style={styles.spellHeader}>
+                      <Image style={styles.spellImage} source={{ uri: `http://ddragon.leagueoflegends.com/cdn/11.20.1/img/spell/${spell.image.full}` }} />
+                      <Text style={styles.spellName}>{spell.name}</Text>
+                    </View>
+                    <Text style={styles.spellDescription}>{spell.description}</Text>
+                  </View>
+                ))
+              }
             </View>
             <View style={styles.content}>
               <Text style={styles.titleSection}>Skins</Text>
@@ -196,5 +209,31 @@ const styles = StyleSheet.create({
   },
   scroll: {
     paddingBottom: 20
+  },
+  spell: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    padding: 20,
+    paddingTop: 10,
+  },
+  spellHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  spellImage: {
+    width: 64,
+    height: 64,
+    borderRadius: 5
+  },
+  spellName: {
+    fontSize: 20,
+    marginLeft: 14,
+    fontWeight: '500',
+    color: '#242423',
+  },
+  spellDescription: {
+    paddingTop: 10,
   }
 });
