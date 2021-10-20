@@ -95,20 +95,17 @@ const ChampionScreen = ({ route }) => {
                 ))
               }
             </View>
-
-
             <View style={styles.content}>
               <Text style={styles.titleSection}>Tags</Text>
               <View style={styles.barSection} />
-                <View style={styles.tags}>
-                  {
+              <View style={styles.tags}>
+                {
                   champion.tags.map((tag, i) => (
-                      <Text key={i} style={styles.tag}>{translateTag(tag)}</Text>
+                    <Text key={i} style={styles.tag}>{translateTag(tag)}</Text>
                   ))
-                  }
-                </View>
+                }
+              </View>
             </View>
-
             <View style={styles.content}>
               <Text style={styles.titleSection}>Skins</Text>
               <View style={styles.barSection} />
@@ -270,12 +267,15 @@ const styles = StyleSheet.create({
   tags: {
     flexDirection: 'row',
     padding: 20,
+    paddingTop: 10,
   },
   tag: {
-    marginRight: 5,
-    backgroundColor: 'rgba(190, 146, 78, 0.7)',
-    borderRadius: 15,
-    padding: 10,
+    marginRight: 10,
+    backgroundColor: '#be924e',
+    borderRadius: 5,
+    padding: 6,
+    paddingLeft: 12,
+    paddingRight: 12,
     color: 'white'
   }
 });
