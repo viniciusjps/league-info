@@ -6,7 +6,6 @@ import {
   SafeAreaView,
   StyleSheet,
   Image,
-  ImageBackground,
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
@@ -35,16 +34,15 @@ const ChampionScreen = ({ route }) => {
         champion
           ?
           <ScrollView>
-            <ImageBackground style={styles.header}
-              source={{ uri: `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.id}_0.jpg` }}
-              imageStyle={{ opacity: 0.2 }}>
+            <Image style={styles.splash} source={{ uri: `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.id}_0.jpg` }} />
+            <View style={styles.header}>
               <Image style={styles.avatar} source={{ uri: avatar }} />
               <View>
                 <Text style={styles.title}>{champion.name}</Text>
                 <View style={styles.bar} />
                 <Text style={styles.subtitle}>{champion.title}</Text>
               </View>
-            </ImageBackground>
+            </View>
             <View style={styles.content}>
               <Text style={styles.description}>{champion.blurb}</Text>
             </View>
@@ -55,11 +53,6 @@ const ChampionScreen = ({ route }) => {
                 <Image style={styles.passive} source={{ uri: `http://ddragon.leagueoflegends.com/cdn/11.20.1/img/passive/${champion.passive.image.full}` }} />
                 <Text style={styles.passiveDescription}>{champion.passive.description}</Text>
               </View>
-            </View>
-            <View style={styles.content}>
-              <Text style={styles.titleSection}>Splash Arte</Text>
-              <View style={styles.barSection} />
-              <Image style={styles.splash} source={{ uri: `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.id}_0.jpg` }} />
             </View>
             <View style={styles.content}>
               <Text style={styles.titleSection}>Habilidades</Text>
@@ -105,12 +98,11 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 20,
-    paddingTop: 40,
-    paddingBottom: 40,
+    paddingBottom: 0,
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 5,
-    borderBottomColor: '#be924e',
+    borderTopWidth: 5,
+    borderTopColor: '#be924e',
     resizeMode: 'cover',
   },
   avatar: {
@@ -175,7 +167,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   splash: {
-    marginTop: 10,
     width: '100%',
     height: 250,
     resizeMode: 'cover',
