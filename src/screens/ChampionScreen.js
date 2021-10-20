@@ -28,6 +28,32 @@ const ChampionScreen = ({ route }) => {
     }
   }, []);
 
+  const translateTag = (tag) => {
+    switch (tag) {
+      case 'Fighter':
+        return 'Lutador';
+        break;
+      case 'Tank':
+        return 'Tanque';
+        break;
+      case 'Mage':
+        return 'Mago';
+        break;
+      case 'Assassin':
+        return 'Assassino';
+        break;
+      case 'Marksman':
+        return 'Atirador';
+        break;
+      case 'Support':
+        return 'Suporte';
+        break;
+      default:
+        return 'Outros';
+        break;
+    }
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       {
@@ -68,6 +94,17 @@ const ChampionScreen = ({ route }) => {
                   </View>
                 ))
               }
+            </View>
+            <View style={styles.content}>
+              <Text style={styles.titleSection}>Tags</Text>
+              <View style={styles.barSection} />
+              <View style={styles.tags}>
+                {
+                  champion.tags.map((tag, i) => (
+                    <Text key={i} style={styles.tag}>{translateTag(tag)}</Text>
+                  ))
+                }
+              </View>
             </View>
             <View style={styles.content}>
               <Text style={styles.titleSection}>Skins</Text>
@@ -226,5 +263,19 @@ const styles = StyleSheet.create({
   },
   spellDescription: {
     paddingTop: 10,
+  },
+  tags: {
+    flexDirection: 'row',
+    padding: 20,
+    paddingTop: 10,
+  },
+  tag: {
+    marginRight: 10,
+    backgroundColor: '#be924e',
+    borderRadius: 5,
+    padding: 6,
+    paddingLeft: 12,
+    paddingRight: 12,
+    color: 'white'
   }
 });
