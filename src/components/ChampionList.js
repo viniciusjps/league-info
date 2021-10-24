@@ -6,35 +6,27 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  TextInput,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
-import ClearButton from './ClearButton';
+import InputSearch from './InputSearch';
 
 const translateTag = (tag) => {
   switch (tag) {
     case 'lutador':
       return 'Fighter';
-      break;
     case 'tanque':
       return 'Tank';
-      break;
     case 'mago':
       return 'Mage';
-      break;
     case 'assassino':
       return 'Assassin';
-      break;
     case 'atirador':
       return 'Marksman';
-      break;
     case 'suporte':
       return 'Support';
-      break;
     default:
       return 'Outros';
-      break;
   }
 }
 
@@ -43,7 +35,7 @@ const ChampionList = () => {
   const navigation = useNavigation();
   const [champions, setChampions] = useState([]);
   const [showChampions, setShowChampions] = useState([]);
-  const [search, onChangeSearch] = useState('');
+  const [filtered, setFiltered] = useState(false);
 
   useEffect(() => {
     fetch('https://ddragon.leagueoflegends.com/cdn/11.20.1/data/pt_BR/champion.json')
@@ -64,54 +56,42 @@ const ChampionList = () => {
       }).catch(err => setChampions([]));
   }, []);
 
-  useEffect(() => {
-    if (search) { 
+  function filter(value) {
+    if (value) {
+      setFiltered(true);
       setShowChampions(
-        champions.filter(champ => 
-          champ.name.toLowerCase().includes(search.toLowerCase()) ||
-          champ.tags.includes(translateTag(search.toLowerCase()))
+        champions.filter(champ =>
+          champ.name.toLowerCase().includes(value.toLowerCase()) ||
+          champ.tags.includes(translateTag(value.toLowerCase()))
         )
       );
-    }
-    else {
+    } else {
+      setFiltered(false);
       setShowChampions(champions);
     }
-  }, [search]);
+  }
 
   return (
     <View>
       {
-        champions.length > 0
-          ?
-          <View style={styles.container}>
-            <Text style={styles.title}>Campeões</Text>
-            <View style={styles.bar} />
-            <View style={styles.containerInput}>
-              <TextInput 
-                style={styles.input}
-                onChangeText={onChangeSearch}
-                value={search}
-                multiline={false}
-                clearButtonMode='always'
-                placeholder='Buscar por nome ou Tag'
-              />
-              <ClearButton 
-                style={styles.buttonClear} 
-                onPress={() => {
-                  setShowChampions(champions);
-                  onChangeSearch('');
-                }} />
-            </View>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-              {showChampions.map((item, i) => (
-                <TouchableOpacity key={i} style={styles.item} onPress={() => { navigation.navigate('ChampionScreen', { champion: item.name }); }}>
-                  <Image style={styles.image} source={{ uri: item.image }} />
-                  <Text style={styles.name}>{item.name}</Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </View>
-          : undefined
+        champions.length > 0 &&
+        <View style={styles.container}>
+          <Text style={styles.title}>Campeões</Text>
+          <View style={styles.bar} />
+          <InputSearch
+            placeholder={'Buscar campeão por nome ou tag'}
+            submit={(value) => filter(value)}
+            filtered={filtered}
+          />
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            {showChampions.map((item, i) => (
+              <TouchableOpacity key={i} style={styles.item(i == 0)} onPress={() => { navigation.navigate('ChampionScreen', { champion: item.name }); }}>
+                <Image style={styles.image} source={{ uri: item.image }} />
+                <Text style={styles.name}>{item.name}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
       }
     </View>
   );
@@ -136,10 +116,11 @@ const styles = StyleSheet.create({
     width: 100,
     borderRadius: 50,
   },
-  item: {
-    marginLeft: 16,
+  item: (first) => ({
+    marginRight: 16,
+    marginLeft: first ? 16 : 0,
     alignItems: 'center',
-  },
+  }),
   name: {
     marginTop: 3,
     color: '#242423'
