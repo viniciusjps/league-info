@@ -9,6 +9,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 
 const ChampionScreen = ({ route }) => {
   const navigation = useNavigation();
@@ -32,25 +33,18 @@ const ChampionScreen = ({ route }) => {
     switch (tag) {
       case 'Fighter':
         return 'Lutador';
-        break;
       case 'Tank':
         return 'Tanque';
-        break;
       case 'Mage':
         return 'Mago';
-        break;
       case 'Assassin':
         return 'Assassino';
-        break;
       case 'Marksman':
         return 'Atirador';
-        break;
       case 'Support':
         return 'Suporte';
-        break;
       default:
         return 'Outros';
-        break;
     }
   }
 
@@ -60,6 +54,7 @@ const ChampionScreen = ({ route }) => {
         champion
           ?
           <ScrollView>
+            <StatusBar style="dark" />
             <Image style={styles.splash} source={{ uri: `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.id}_0.jpg` }} />
             <View style={styles.header}>
               <Image style={styles.avatar} source={{ uri: avatar }} />
@@ -113,7 +108,7 @@ const ChampionScreen = ({ route }) => {
                 {
                   champion.skins.slice(1).map((skin, i) => (
                     <TouchableOpacity key={i} style={styles.skin}>
-                      <Image style={styles.skinImage} source={{ uri: `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.id}_${skin.num}.jpg` }} />
+                      <Image style={styles.skinImage(i == 0)} source={{ uri: `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.id}_${skin.num}.jpg` }} />
                       <Text style={styles.skinName}>{skin.name}</Text>
                     </TouchableOpacity>
                   ))
@@ -138,8 +133,6 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     flexDirection: 'row',
     alignItems: 'center',
-    borderTopWidth: 5,
-    borderTopColor: '#be924e',
     resizeMode: 'cover',
   },
   avatar: {
@@ -177,7 +170,7 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 14,
     padding: 20,
-    paddingBottom: 0,
+    paddingBottom: 10,
   },
   titleSection: {
     fontSize: 18,
@@ -214,13 +207,14 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     position: 'relative',
   },
-  skinImage: {
+  skinImage: (first) => ({
     height: 250,
     width: 430,
     resizeMode: 'cover',
-    marginLeft: 20,
+    marginRight: 20,
+    marginLeft: first ? 20 : 0,
     borderRadius: 10,
-  },
+  }),
   skinName: {
     position: 'absolute',
     padding: 10,

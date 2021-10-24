@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import HomeScreen from "./src/screens/HomeScreen";
 import ChampionScreen from "./src/screens/ChampionScreen";
+import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -32,6 +33,7 @@ export default function App() {
           />
         </Stack.Navigator>
       </SafeAreaProvider>
+      <StatusBar style="light" />
     </NavigationContainer>
   );
 }
