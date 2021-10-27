@@ -102,6 +102,22 @@ const ChampionScreen = ({ route }) => {
               </View>
             </View>
             <View style={styles.content}>
+              <Text style={styles.titleSection}>Jogando de {champion.name}</Text>
+              <View style={styles.barSection} />
+              <View style={styles.dicas}>
+                <Text>{champion.allytips.join('\n\n')}</Text>
+              </View>
+            </View>
+
+            <View style={styles.content}>
+              <Text style={styles.titleSection}>Jogando contra {champion.name}</Text>
+              <View style={styles.barSection} />
+              <View style={styles.dicas}>
+                <Text>{champion.enemytips.join('\n\n')}</Text>
+              </View>
+            </View>
+
+            <View style={styles.content}>
               <Text style={styles.titleSection}>Skins</Text>
               <View style={styles.barSection} />
               <ScrollView style={styles.scroll} horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -271,5 +287,9 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingRight: 12,
     color: 'white'
-  }
+  },
+  dicas: {
+    padding: 20,
+    paddingTop: 10,
+  },
 });
