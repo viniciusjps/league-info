@@ -48,6 +48,14 @@ const ChampionScreen = ({ route }) => {
     }
   }
 
+  const getCost = (spell) => {
+    let cost =  'Sem Custo';
+    if (spell.costBurn != 0) {
+      cost =  `${spell.costBurn} ${spell.costType.replace('{{ abilityresourcename }}', champion.partype)}`;
+    }
+    return cost;
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       {
@@ -83,7 +91,11 @@ const ChampionScreen = ({ route }) => {
                   <View key={i} style={styles.spell}>
                     <View style={styles.spellHeader}>
                       <Image style={styles.spellImage} source={{ uri: `http://ddragon.leagueoflegends.com/cdn/11.20.1/img/spell/${spell.image.full}` }} />
-                      <Text style={styles.spellName}>{spell.name}</Text>
+                      <View>
+                        <Text style={styles.spellName}>{spell.name}</Text>
+                        <Text style={styles.spellStats}>Custo: {getCost(spell)}</Text>
+                        <Text style={styles.spellStats}>Tempo de Recarga: {spell.cooldownBurn} s</Text>
+                      </View>
                     </View>
                     <Text style={styles.spellDescription}>{spell.description}</Text>
                   </View>
@@ -273,6 +285,12 @@ const styles = StyleSheet.create({
   },
   spellDescription: {
     paddingTop: 10,
+  },
+  spellStats: {
+    fontSize: 10,
+    marginLeft: 14,
+    fontWeight: '500',
+    color: '#242423',
   },
   tags: {
     flexDirection: 'row',
