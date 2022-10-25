@@ -115,22 +115,26 @@ const ChampionScreen = ({ route }) => {
                 }
               </View>
             </View>
-            <View style={styles.content}>
-              <Text style={styles.titleSection}>Jogando de {champion.name}</Text>
-              <View style={styles.barSection} />
-              <View style={styles.dicas}>
-                <Text>{champion.allytips.join('\n\n')}</Text>
+            {
+              champion.allytips.length > 0 &&
+              <View style={styles.content}>
+                <Text style={styles.titleSection}>Jogando de {champion.name}</Text>
+                <View style={styles.barSection} />
+                <View style={styles.dicas}>
+                  <Text>{champion.allytips.join('\n\n')}</Text>
+                </View>
               </View>
-            </View>
-
-            <View style={styles.content}>
-              <Text style={styles.titleSection}>Jogando contra {champion.name}</Text>
-              <View style={styles.barSection} />
-              <View style={styles.dicas}>
-                <Text>{champion.enemytips.join('\n\n')}</Text>
+            }
+            {
+              champion.enemytips.length > 0 &&
+              <View style={styles.content}>
+                <Text style={styles.titleSection}>Jogando contra {champion.name}</Text>
+                <View style={styles.barSection} />
+                <View style={styles.dicas}>
+                  <Text>{champion.enemytips.join('\n\n')}</Text>
+                </View>
               </View>
-            </View>
-
+            }
             <View style={styles.content}>
               <TitleSection title={'Skins'} />
               <ScrollView style={styles.scroll} horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -241,7 +245,7 @@ const styles = StyleSheet.create({
     width: 430,
     resizeMode: 'cover',
     marginRight: 20,
-    marginLeft: first ? 20 : 0,
+    marginLeft: first ? 10 : 0,
     borderRadius: 10,
   }),
   skinName: (first) => ({
