@@ -5,15 +5,15 @@ import {
   Text,
 } from 'react-native';
 
-const TitleSection = ({ title }) => {
+const TitleSection = ({ title, invert }) => {
   return (
     <View style={styles.container}>
       {
         title
         &&
         <View>
-          <Text style={styles.titleSection}>{title}</Text>
-          <View style={styles.barSection} />
+          <Text style={styles.titleSection(invert)}>{title}</Text>
+          <View style={styles.barSection(invert)} />
         </View>
       }
     </View>
@@ -22,19 +22,19 @@ const TitleSection = ({ title }) => {
 
 export default TitleSection;
 const styles = StyleSheet.create({
-  titleSection: {
+  titleSection: (invert) => ({
     fontSize: 18,
-    color: '#be924e',
+    color: (invert === true) ? '#fff' : '#be924e',
     textTransform: 'uppercase',
     paddingLeft: 20,
     paddingTop: 20,
-  },
-  barSection: {
+  }),
+  barSection: (invert) => ({
     height: 2,
     width: 35,
-    backgroundColor: '#be924e',
+    backgroundColor: (invert === true) ? '#fff' : '#be924e',
     marginTop: 8,
     marginBottom: 8,
     marginLeft: 20
-  },
+  }),
 });
