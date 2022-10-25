@@ -49,9 +49,9 @@ const ChampionScreen = ({ route }) => {
   }
 
   const getCost = (spell) => {
-    let cost =  'Sem Custo';
+    let cost = 'Sem Custo';
     if (spell.costBurn != 0) {
-      cost =  `${spell.costBurn} ${spell.costType.replace('{{ abilityresourcename }}', champion.partype)}`;
+      cost = `${spell.costBurn} ${spell.costType.replace('{{ abilityresourcename }}', champion.partype)}`;
     }
     return cost;
   }
@@ -137,7 +137,7 @@ const ChampionScreen = ({ route }) => {
                   champion.skins.slice(1).map((skin, i) => (
                     <TouchableOpacity key={i} style={styles.skin}>
                       <Image style={styles.skinImage(i == 0)} source={{ uri: `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.id}_${skin.num}.jpg` }} />
-                      <Text style={styles.skinName}>{skin.name}</Text>
+                      <Text style={styles.skinName(i == 0)}>{skin.name}</Text>
                     </TouchableOpacity>
                   ))
                 }
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     marginLeft: first ? 20 : 0,
     borderRadius: 10,
   }),
-  skinName: {
+  skinName: (first) => ({
     position: 'absolute',
     padding: 10,
     paddingLeft: 20,
@@ -255,8 +255,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#242423',
     color: '#fff',
     borderRadius: 8,
-    marginLeft: 20,
-  },
+    marginLeft: first ? 10 : 0,
+  }),
   scroll: {
     paddingBottom: 20
   },
