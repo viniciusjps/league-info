@@ -11,18 +11,23 @@ import {
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
+import TitleSection from '../components/TitleSection';
+
 const ChampionScreen = ({ route }) => {
   const navigation = useNavigation();
   const [champion, setChampion] = useState(undefined);
   const [avatar, setAvatar] = useState(undefined);
+  const [patch, setPatch] = useState(undefined);
 
   useEffect(() => {
     const champ = route.params?.champion;
+    const patch = route.params.patch;
     if (champ) {
-      fetch(`https://ddragon.leagueoflegends.com/cdn/11.20.1/data/pt_BR/champion/${champ}.json`)
+      setPatch(patch);
+      fetch(`https://ddragon.leagueoflegends.com/cdn/${patch}/data/pt_BR/champion/${champ}.json`)
         .then(res => res.json())
         .then(res => {
-          setAvatar(`https://ddragon.leagueoflegends.com/cdn/11.20.1/img/champion/${champ}.png`);
+          setAvatar(`https://ddragon.leagueoflegends.com/cdn/${patch}/img/champion/${champ}.png`);
           setChampion(res.data[champ]);
           navigation.setOptions({ title: champ });
         }).catch(err => { useNavigation().goBack(); });
@@ -76,21 +81,19 @@ const ChampionScreen = ({ route }) => {
               <Text style={styles.description}>{champion.blurb}</Text>
             </View>
             <View style={styles.content}>
-              <Text style={styles.titleSection}>Passiva</Text>
-              <View style={styles.barSection} />
+              <TitleSection title={'Passiva'} />
               <View style={styles.passiveView}>
-                <Image style={styles.passive} source={{ uri: `http://ddragon.leagueoflegends.com/cdn/11.20.1/img/passive/${champion.passive.image.full}` }} />
+                <Image style={styles.passive} source={{ uri: `http://ddragon.leagueoflegends.com/cdn/${patch}/img/passive/${champion.passive.image.full}` }} />
                 <Text style={styles.passiveDescription}>{champion.passive.description}</Text>
               </View>
             </View>
             <View style={styles.content}>
-              <Text style={styles.titleSection}>Habilidades</Text>
-              <View style={styles.barSection} />
+              <TitleSection title={'Habilidades'} />
               {
                 champion.spells.map((spell, i) => (
                   <View key={i} style={styles.spell}>
                     <View style={styles.spellHeader}>
-                      <Image style={styles.spellImage} source={{ uri: `http://ddragon.leagueoflegends.com/cdn/11.20.1/img/spell/${spell.image.full}` }} />
+                      <Image style={styles.spellImage} source={{ uri: `http://ddragon.leagueoflegends.com/cdn/${patch}/img/spell/${spell.image.full}` }} />
                       <View>
                         <Text style={styles.spellName}>{spell.name}</Text>
                         <Text style={styles.spellStats}>Custo: {getCost(spell)}</Text>
@@ -103,8 +106,7 @@ const ChampionScreen = ({ route }) => {
               }
             </View>
             <View style={styles.content}>
-              <Text style={styles.titleSection}>Tags</Text>
-              <View style={styles.barSection} />
+              <TitleSection title={'Características'} />
               <View style={styles.tags}>
                 {
                   champion.tags.map((tag, i) => (
@@ -130,8 +132,7 @@ const ChampionScreen = ({ route }) => {
             </View>
 
             <View style={styles.content}>
-              <Text style={styles.titleSection}>Skins</Text>
-              <View style={styles.barSection} />
+              <TitleSection title={'Skins'} />
               <ScrollView style={styles.scroll} horizontal={true} showsHorizontalScrollIndicator={false}>
                 {
                   champion.skins.slice(1).map((skin, i) => (

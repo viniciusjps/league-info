@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
+import TitleSection from './TitleSection';
 import InputSearch from './InputSearch';
 
 const translateTag = (tag) => {
@@ -38,7 +39,8 @@ const ChampionList = () => {
   const [filtered, setFiltered] = useState(false);
 
   useEffect(() => {
-    fetch('https://ddragon.leagueoflegends.com/cdn/11.20.1/data/pt_BR/champion.json')
+    const patch = navigation.getState()?.routes[0]?.params?.patch;
+    fetch(`https://ddragon.leagueoflegends.com/cdn/${patch}/data/pt_BR/champion.json`)
       .then(res => res.json())
       .then(res => {
         const { data } = res;
@@ -48,7 +50,7 @@ const ChampionList = () => {
           champions.push({
             name,
             tags,
-            image: `https://ddragon.leagueoflegends.com/cdn/11.20.1/img/champion/${data[name].image.full}`
+            image: `https://ddragon.leagueoflegends.com/cdn/${patch}/img/champion/${data[name].image.full}`
           });
         });
         setChampions(champions);
@@ -76,8 +78,7 @@ const ChampionList = () => {
       {
         champions.length > 0 &&
         <View style={styles.container}>
-          <Text style={styles.title}>Campeões</Text>
-          <View style={styles.bar} />
+          <TitleSection title={'Campeões'} />
           <InputSearch
             placeholder={'Buscar campeão por nome ou tag'}
             submit={(value) => filter(value)}
@@ -101,15 +102,7 @@ export default ChampionList;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#ecf0f1',
-    paddingTop: 40,
     paddingBottom: 20
-  },
-  title: {
-    fontSize: 22,
-    paddingLeft: 16,
-    fontWeight: '300',
-    color: '#be924e',
-    textTransform: 'uppercase'
   },
   image: {
     height: 100,
@@ -124,14 +117,6 @@ const styles = StyleSheet.create({
   name: {
     marginTop: 3,
     color: '#242423'
-  },
-  bar: {
-    height: 2,
-    width: 50,
-    backgroundColor: '#be924e',
-    marginTop: 8,
-    marginLeft: 16,
-    marginBottom: 16,
   },
   input: {
     height: 40,

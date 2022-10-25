@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-  Text,
-  SafeAreaView,
   StyleSheet,
   Image,
   View

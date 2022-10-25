@@ -11,13 +11,17 @@ import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
+  const PATCH = '12.20.1';
 
   return (
     <NavigationContainer>
       <SafeAreaProvider>
-        <Stack.Navigator>
+        <Stack.Navigator 
+          initialRouteName="HomeScreen"
+        >
           <Stack.Screen
             name="HomeScreen"
+            initialParams={{ patch: PATCH }}
             component={HomeScreen}
             options={{
               headerShown: false,
@@ -25,6 +29,7 @@ export default function App() {
           />
           <Stack.Screen
             name="ChampionScreen"
+            initialParams={{ patch: PATCH }}
             component={ChampionScreen}
             options={{
               headerShown: true,
